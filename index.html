@@ -65,14 +65,30 @@ reader.onload = function(e) {
     });
 
 
-    function mostrarInventario() {
-      const tbody = document.querySelector('#inventoryTable tbody');
-      tbody.innerHTML = '';
-      for (const [producto, cantidad] of Object.entries(inventario)) {
-        const row = `<tr><td>${producto}</td><td>${cantidad}</td></tr>`;
-        tbody.innerHTML += row;
-      }
-    }
+function mostrarInventario() {
+  const tbody = document.querySelector('#inventoryTable tbody');
+  tbody.innerHTML = '';
+  for (const [producto, cantidad] of Object.entries(inventario)) {
+    const row = document.createElement('tr');
+
+    // Celda producto con evento click
+    const tdProducto = document.createElement('td');
+    tdProducto.textContent = producto;
+    tdProducto.style.cursor = 'pointer'; // Cambia cursor para indicar que es clickeable
+
+    tdProducto.onclick = () => {
+      document.getElementById('itemName').value = producto;
+    };
+
+    // Celda cantidad
+    const tdCantidad = document.createElement('td');
+    tdCantidad.textContent = cantidad;
+
+    row.appendChild(tdProducto);
+    row.appendChild(tdCantidad);
+    tbody.appendChild(row);
+  }
+}
 
 
      function normalizarNombre(nombre) {
